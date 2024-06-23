@@ -22,6 +22,10 @@ function Profile() {
     fetchUserData();
   }, []);
 
+  function handlemain() {
+    window.location.href = "/main";
+  }
+
   async function handleLogout() {
     try {
       await auth.signOut();
@@ -48,6 +52,9 @@ function Profile() {
             <p>First Name: {userDetails.firstName}</p>
             {/* <p>Last Name: {userDetails.lastName}</p> */}
           </div>
+          <button className="btn btn-primary" onClick={handlemain}>
+            back
+          </button>
           <button className="btn btn-primary" onClick={handleLogout}>
             Logout
           </button>

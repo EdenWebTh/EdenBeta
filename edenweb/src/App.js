@@ -9,6 +9,8 @@ import {
 
 import Login from "./login";
 import SignUp from "./register";
+import MainPage from "./main";
+import Blog from "./blog";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -35,7 +37,9 @@ function App() {
               />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<SignUp />} />
+              <Route path="/main" element={<MainPage />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/blog" element={<Blog />} />
             </Routes>
             <ToastContainer />
           </div>

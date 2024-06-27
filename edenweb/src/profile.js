@@ -6,13 +6,15 @@ function Profile() {
   const [userDetails, setUserDetails] = useState(null);
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
-      console.log(user);
-
-      const docRef = doc(db, "Users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setUserDetails(docSnap.data());
-        console.log(docSnap.data());
+      if (user) {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setUserDetails(docSnap.data());
+          console.log(docSnap.data());
+        } else {
+          console.log("User document does not exist");
+        }
       } else {
         console.log("User is not logged in");
       }
@@ -40,11 +42,12 @@ function Profile() {
       {userDetails ? (
         <>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <img
+            {/* <img
+              alt="description of the image"
               src={userDetails.photo}
               width={"40%"}
               style={{ borderRadius: "50%" }}
-            />
+            /> */}
           </div>
           <h3>Welcome {userDetails.firstName} 🙏🙏</h3>
           <div>

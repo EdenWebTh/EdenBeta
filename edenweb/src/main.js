@@ -1,49 +1,63 @@
-import { auth,db } from "./firebase-config";
+import { auth, db } from "./firebase-config";
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 
 const MainPage = () => {
   const [userDetails, setUserDetails] = useState(null);
-  const fetchUserData = async () => {
-    auth.onAuthStateChanged(async (user) => {
-      console.log(user);
+  const [user, setUser] = useState();
 
-      const docRef = doc(db, "Users", user.uid);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        setUser(userAuth);
+        fetchUserData(userAuth.uid);
+      } else {
+        setUser(null);
+        setUserDetails(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const fetchUserData = async (userId) => {
+    const docRef = doc(db, "Users", userId);
+    try {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setUserDetails(docSnap.data());
-        console.log(docSnap.data());
       } else {
-        console.log("User is not logged in");
+        console.log("User data not found");
       }
-    });
+    } catch (error) {
+      console.error("Error fetching user data:", error.message);
+    }
   };
-  useEffect(() => {
-    fetchUserData();
-  }, []);
 
-  function handlelogin() {
+  const handleLogin = () => {
     window.location.href = "/login";
-  }
+  };
 
-  async function handleLogout() {
+  const handleLogout = async () => {
     try {
       await auth.signOut();
-      window.location.href = "/main";
       console.log("User logged out successfully!");
+      window.location.href = "/login"; // Redirect to login page after logout
     } catch (error) {
       console.error("Error logging out:", error.message);
     }
-  }
+  };
+
   return (
     <div>
-      {userDetails ? (
+      {user ? (
         <>
+          <h3>Welcome {userDetails?.firstName} 🙏🙏</h3>
           <p className="">
-            go to profile <a href="/profile">profile</a>
+            Go to profile <a href="/profile">profile</a>
           </p>
           <p className="">
-            go to blog <a href="/blog">blog</a>
+            Go to blog <a href="/blog">blog</a>
           </p>
           <button className="btn btn-primary" onClick={handleLogout}>
             Logout
@@ -52,7 +66,7 @@ const MainPage = () => {
       ) : (
         <>
           <p>Please Login</p>
-          <button className="btn btn-primary" onClick={handlelogin}>
+          <button className="btn btn-primary" onClick={handleLogin}>
             Login
           </button>
         </>

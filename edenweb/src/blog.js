@@ -16,13 +16,15 @@ function Blog() {
   const [userDetails, setUserDetails] = useState(null);
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
-      console.log(user);
-
-      const docRef = doc(db, "Users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setUserDetails(docSnap.data());
-        console.log(docSnap.data());
+      if (user) {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setUserDetails(docSnap.data());
+          console.log(docSnap.data());
+        } else {
+          console.log("User document does not exist");
+        }
       } else {
         console.log("User is not logged in");
       }
@@ -70,7 +72,7 @@ function Blog() {
       setUsers(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
     return () => unsubscribe();
-  }, []);
+  }, [usersCollectionRef]);
 
   function handlemain() {
     window.location.href = "/main";

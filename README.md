@@ -21,7 +21,6 @@
   - example : docker tag edenweb-image:latest adosdata/edenweb-image:latest
 - `docker push <ชื่อ registry>/<ชื่อ repository>:<tag>`
   - example : docker push adosdata/edenweb-image
-- 
 
 ### อธิบายการตั้งค่าใน docker-compose.yml
 - `version: '3.8'` : กำหนดเวอร์ชันของ Docker Compose ที่ใช้

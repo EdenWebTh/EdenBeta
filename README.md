@@ -5,7 +5,7 @@
 
 **command.**
 - `docker login`
-- `docker pull <ชื่อใหม่ของ image>`
+- `docker pull <ชื่อของ image>`
   - example : docker pull adosdata/edenweb-image
 - `docker images`
 - `docker build . -t <imagename>`

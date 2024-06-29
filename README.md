@@ -31,11 +31,7 @@
 - `ports: - "3002:3000"` : แมปพอร์ต 3000 ของ container ไปยังพอร์ต 3002 ของเครื่อง host
 - `stdin_open: true` และ `tty: true` : เทียบเท่ากับ -it เพื่อเปิด interactive terminal
 
-### `docker-compose run --rm react-test-app`
-- รันบริการ (และลบ container เมื่อหยุดรัน) [ react-test-app ชื่อ ต้องตรงกับใน docker compose ]
-
-### `docker-compose up --build`
-- รันบริการ (โดยไม่ลบ container เมื่อหยุดรัน)
-
-### `docker-compose down`
-- หยุดบริการ
+**command.**
+- `docker-compose run --rm react-test-app` : รันบริการ (และลบ container เมื่อหยุดรัน) [ react-test-app ชื่อ ต้องตรงกับใน docker compose ]
+- `docker-compose up --build` : รันบริการ (โดยไม่ลบ container เมื่อหยุดรัน)
+- `docker-compose down` : หยุดบริการ

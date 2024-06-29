@@ -21,3 +21,21 @@
   - example : docker tag edenweb-image:latest adosdata/edenweb-image:latest
 - `docker push <ชื่อ registry>/<ชื่อ repository>:<tag>`
   - example : docker push adosdata/edenweb-image
+- 
+
+### อธิบายการตั้งค่าใน docker-compose.yml
+- `version: '3.8'` : กำหนดเวอร์ชันของ Docker Compose ที่ใช้
+- `services:` : ระบุบริการที่ต้องการรัน
+- `react-test-app:` : ชื่อของบริการ (สามารถตั้งชื่อใดๆ ก็ได้)
+- `build: context: .` : ใช้ context ปัจจุบัน (โฟลเดอร์ที่มี Dockerfile) เพื่อ build image
+- `ports: - "3002:3000"` : แมปพอร์ต 3000 ของ container ไปยังพอร์ต 3002 ของเครื่อง host
+- `stdin_open: true` และ `tty: true` : เทียบเท่ากับ -it เพื่อเปิด interactive terminal
+
+### `docker-compose run --rm react-test-app`
+- รันบริการ (และลบ container เมื่อหยุดรัน) [ react-test-app ชื่อ ต้องตรงกับใน docker compose ]
+
+### `docker-compose up --build`
+- รันบริการ (โดยไม่ลบ container เมื่อหยุดรัน)
+
+### `docker-compose down`
+- หยุดบริการ
